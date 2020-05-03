@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_02_172326) do
+ActiveRecord::Schema.define(version: 2020_05_03_174911) do
 
   create_table "accounting_events", force: :cascade do |t|
     t.string "type", null: false
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_05_02_172326) do
   end
 
   create_table "income_invoices", force: :cascade do |t|
-    t.integer "accouting_id", null: false
+    t.integer "accounting_id", null: false
     t.string "number", null: false
     t.string "client_vatid"
     t.string "total_amount"
