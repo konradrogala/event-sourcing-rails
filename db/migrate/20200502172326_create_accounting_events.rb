@@ -8,7 +8,7 @@ class CreateAccountingEvents < ActiveRecord::Migration[6.0]
       t.text :metadata, null: false
       t.datetime :created_at, null: false
 
-      t.index :accounting
+      t.index :accounting_id
     end
   end
 end
