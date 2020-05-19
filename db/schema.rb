@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_03_174911) do
+ActiveRecord::Schema.define(version: 2020_05_06_192632) do
 
   create_table "accounting_events", force: :cascade do |t|
     t.string "type", null: false
@@ -18,13 +18,14 @@ ActiveRecord::Schema.define(version: 2020_05_03_174911) do
     t.text "data", null: false
     t.text "metadata", null: false
     t.datetime "created_at", null: false
-    t.index "\"accounting\"", name: "index_accounting_events_on_accounting"
+    t.index ["accounting_id"], name: "index_accounting_events_on_accounting_id"
   end
 
   create_table "accountings", force: :cascade do |t|
     t.string "vat_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "vat_active", default: false
   end
 
   create_table "income_invoice_events", force: :cascade do |t|

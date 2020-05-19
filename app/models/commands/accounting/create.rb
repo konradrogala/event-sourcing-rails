@@ -6,6 +6,8 @@ module Commands
 
     attributes :vat_id, :metadata
 
+    validates :vat_id, presence: true
+
     private def build_event
       Events::Accounting::Created.new(
         vat_id: vat_id,
