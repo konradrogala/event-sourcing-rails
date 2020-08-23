@@ -3,5 +3,10 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :income_invoices, only: [:create]
     resources :accountings, only: [:create]
+
+    namespace :finances do
+      post 'income/:id', to: 'finances#income'
+      post 'tax_liabilities/:id', to: 'finances#tax_liabilities'
+    end
   end
 end
