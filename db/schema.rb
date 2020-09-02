@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_194913) do
+ActiveRecord::Schema.define(version: 2020_09_02_201507) do
 
   create_table "accounting_events", force: :cascade do |t|
     t.string "type", null: false
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 2020_08_29_194913) do
     t.string "vat_amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tax_liability_events", force: :cascade do |t|
+    t.string "type", null: false
+    t.integer "tax_liability_id", null: false
+    t.text "data", null: false
+    t.text "metadata", null: false
+    t.datetime "created_at", null: false
+    t.index ["tax_liability_id"], name: "index_tax_liability_events_on_tax_liability_id"
   end
 
 end
