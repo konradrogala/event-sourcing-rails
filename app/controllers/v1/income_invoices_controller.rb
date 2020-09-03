@@ -1,5 +1,11 @@
 class V1::IncomeInvoicesController < ApplicationController
-  def index
+  def update
+  end
+
+  def show
+  end
+
+  def delete
   end
 
   def create
