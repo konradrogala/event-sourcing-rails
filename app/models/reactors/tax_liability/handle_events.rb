@@ -1,23 +1,27 @@
 module Reactors
   module TaxLiability
-    class Creative
+    class HandleEvents
       def initialize(event)
         @event = event
       end
 
       def perform
         if tax_liabilities.empty?
-          require 'pry'; binding.pry
           Commands::TaxLiability::Create.call(
             accounting: accounting,
-            month: 3,
-            year: 2020,
+            month: invoice_month,
+            year: invoice_year,
             tax_amount: tax_amount,
             vat_amount: vat_amount,
             metadata: { }
           )
         else
-          # Caluclator::TaxLiability::Update
+          Commands::TaxLiability::AmountsUpdated.call(
+            tax_liability: tax_liability,
+            tax_amount: summed_tax_amount,
+            vat_amount: summed_vat_amount,
+            metadata: { }
+          )
         end
       end
 
@@ -48,12 +52,28 @@ module Reactors
         end
       end
 
+      def tax_liability
+        @tax_liability ||= tax_liabilities.first
+      end
+
+      def total_amount
+        @total_amount ||= JSON.parse(event_data['total_amount']).to_f
+      end
+
       def vat_amount
-        "23"
+        ((total_amount * 23.0) / 123).round(2)
       end
 
       def tax_amount
-        "18"
+        ((total_amount * 23.0) / 123 * 0.18).round(2)
+      end
+
+      def summed_tax_amount
+        tax_liability.tax_amount.to_f + tax_amount
+      end
+
+      def summed_vat_amount
+        tax_liability.vat_amount.to_f + vat_amount
       end
     end
   end

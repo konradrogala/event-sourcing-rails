@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_02_201507) do
+ActiveRecord::Schema.define(version: 2020_09_04_174911) do
 
   create_table "accounting_events", force: :cascade do |t|
     t.string "type", null: false
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2020_09_02_201507) do
     t.string "total_amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "month"
+    t.integer "year"
   end
 
   create_table "tax_liabilities", force: :cascade do |t|
