@@ -3,13 +3,14 @@ class V1::IncomeInvoicesController < ApplicationController
   end
 
   def show
+    render json: income_invoice
   end
 
   def delete
   end
 
   def create
-    event = Commands::IncomeInvoice::Create.call(
+    Commands::IncomeInvoice::Create.call(
       accounting: accounting,
       number: permitted_params[:number],
       client_vatid: permitted_params[:client_vatid],
@@ -17,9 +18,9 @@ class V1::IncomeInvoicesController < ApplicationController
       month: permitted_params[:month],
       year: permitted_params[:year],
       metadata: {}
-    )
-
-    render json: event
+    ).tap do
+      render status: :ok, json: 'Income invoice created'
+    end
   end
 
   private
@@ -28,7 +29,11 @@ class V1::IncomeInvoicesController < ApplicationController
     @accounting ||= Accounting.find(permitted_params[:accounting_id])
   end
 
+  def income_invoice
+    @income_invoice ||= IncomeInvoice.find(permitted_params[:id])
+  end
+
   def permitted_params
-    params.permit(:accounting_id, :number, :client_vatid, :total_amount, :month, :year)
+    params.permit(:accounting_id, :number, :client_vatid, :total_amount, :month, :year, :id)
   end
 end
