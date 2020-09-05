@@ -14,6 +14,8 @@ class V1::IncomeInvoicesController < ApplicationController
       number: permitted_params[:number],
       client_vatid: permitted_params[:client_vatid],
       total_amount: permitted_params[:total_amount],
+      month: permitted_params[:month],
+      year: permitted_params[:year],
       metadata: {}
     )
 
@@ -27,6 +29,6 @@ class V1::IncomeInvoicesController < ApplicationController
   end
 
   def permitted_params
-    params.permit(:accounting_id, :number, :client_vatid, :total_amount)
+    params.permit(:accounting_id, :number, :client_vatid, :total_amount, :month, :year)
   end
 end

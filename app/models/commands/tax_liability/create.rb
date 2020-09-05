@@ -10,7 +10,6 @@ module Commands
     validates :year, presence: true
 
     private def build_event
-      require 'pry'; binding.pry
       Events::TaxLiability::Created.new(
         accounting_id: accounting.id,
         vat_id: accounting.vat_id,
