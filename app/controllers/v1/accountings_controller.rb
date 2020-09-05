@@ -1,35 +1,34 @@
 class V1::AccountingsController < ApplicationController
   def show
+    render json: accounting
   end
 
   def create
-    event = Commands::Accounting::Create.call(
-      vat_id: random_vat_id,
+    Commands::Accounting::Create.call(
+      vat_id: permitted_params[:vat_id],
       metadata: { }
-    )
-
-    render json: event
+    ).tap do
+      render status: :ok, json: 'Accounting created'
+    end
   end
 
   def update
-    event = Commands::Accounting::Create.call(
+    Commands::Accounting::VatActiveUpdated.call(
       accounting: accounting,
-      vat_active: vat_active,
-      metadata: metadata
+      vat_active: permitted_params[:vat_active],
+      metadata: { }
     )
+
+    render json: accounting
   end
 
   private
 
-  def random_vat_id
-    rand.to_s[2..11]
-  end
-
   def accounting
-    @accounting ||= Accounting.find(params[:accounting_id])
+    @accounting ||= Accounting.find(permitted_params[:id])
   end
 
   def permitted_params
-    params.permit(:accounting_id, :vat_active)
+    params.permit(:id, :vat_active, :vat_id)
   end
 end
